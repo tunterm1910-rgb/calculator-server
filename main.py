@@ -34,11 +34,22 @@ def calculate(expr: str):
             aeval.error.clear()
             return {"ok": False, "expr": expr, "result": "", "error": msg}
         # TODO: Add history
+        history.append({
+            "timestamp": datetime.now().isoformat(),
+            "expr": expr,
+            "result": result,
+        })
         return {"ok": True, "expr": expr, "result": result, "error": ""}
     except Exception as e:
         return {"ok": False, "expr": expr, "error": str(e)}
 
 # TODO GET /hisory
+@app.get("/history")
+def get_history(limit: int = 50):
+    return list(history)[-limit:][::-1]
 
 # TODO DELETE /history
-
+@app.delete("/history")
+def delete_history():
+    history.clear()
+    return {"ok": True, "cleared": True}
