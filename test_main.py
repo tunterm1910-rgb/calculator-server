@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
-from main import app, history, HISTORY_MAX # or whatever your app module is
+from app.main import app
+from app.dependencies import history, HISTORY_MAX
 
 import pytest
 
